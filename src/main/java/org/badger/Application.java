@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.badger")
 public class Application {
 
-  //branch commit test 1
+  //branch commit test 2
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
