@@ -9,6 +9,7 @@ public class Handler {
 
   @RequestMapping("/hello")
   public String hello() {
+    //blah
     //language=HTML
     return "<html><body><h1>Hello!</h1></body></html>";
   }
