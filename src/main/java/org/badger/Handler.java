@@ -10,7 +10,7 @@ public class Handler {
 
   @RequestMapping(value = "/hello", method = RequestMethod.GET)
   public String hello() {
-    //blahblah
+    //this is a comment
     return response();
   }
 
