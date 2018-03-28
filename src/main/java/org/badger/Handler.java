@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Handler {
 
-  @RequestMapping(value = "/hello", method = RequestMethod.GET)
+  @RequestMapping(value = "/hello1", method = RequestMethod.GET)
   public String hello() {
-    //this is a comment
-    return response();
+    //language=HTML
+    return "<html><body><h1>Hello!!</h1></body></html>";
   }
 
-  private String response() {
-    //language=HTML
-    return "<html><body><h1>Hello!</h1></body></html>";
-  }
 }
