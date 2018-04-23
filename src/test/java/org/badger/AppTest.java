@@ -12,6 +12,6 @@ public class AppTest {
 
   @Test
   public void someTest() {
-//    Assert.assertEquals(1 , 3);
+    Assert.assertEquals(1 , 3);
   }
 }
