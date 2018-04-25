@@ -14,4 +14,9 @@ public class AppTest {
   public void someTest() {
 //    Assert.assertEquals(1 , 4);
   }
+
+  @Test
+  public void moarTests() {
+    
+  }
 }
