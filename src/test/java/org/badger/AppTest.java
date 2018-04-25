@@ -17,6 +17,11 @@ public class AppTest {
 
   @Test
   public void moarTests() {
-    
+
+  }
+
+  @Test
+  public void anotherTest() {
+
   }
 }
