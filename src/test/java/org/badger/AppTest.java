@@ -12,4 +12,9 @@ public class AppTest {
   @Test
   public void someTest() {
   }
+
+  @Test
+  public void moarTests() {
+    
+  }
 }
