@@ -18,7 +18,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 println "##teamcity[projectVersion \'${version}\']"
-println "##teamcity[buildNumber \'{build.number}-${version}\']"
+//println "##teamcity[buildNumber \'{build.number}-${version}\']"
 
 repositories {
     jcenter()
