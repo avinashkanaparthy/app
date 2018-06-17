@@ -64,7 +64,7 @@ object Build : BuildType({
 })
 
 object GitHub : GitVcsRoot({
-    name = "https://github.com/antonarhipov/app#refs/heads/master"
+    name = "AppGitHub"
     url = "https://github.com/antonarhipov/app"
     authMethod = password {
         userName = "antonarhipov"
