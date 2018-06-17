@@ -12,7 +12,7 @@ public class AppTest {
 
   @Test
   public void someTest() {
-//    Assert.assertEquals(1 , 4);
+    Assert.assertEquals(1 , 4);
   }
 
   @Test
