@@ -15,9 +15,6 @@ object Build : BuildType({
 
     artifactRules = "build/libs/*.jar"
 
-    params {
-        text("projectVersion", "", label = "projectVersion", allowEmpty = false)
-    }
 
     steps {
         gradle {
