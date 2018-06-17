@@ -22,8 +22,5 @@ public class AppTest {
 
   }
 
-  @Test
-  public void anotherTest() {
 
-  }
 }
