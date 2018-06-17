@@ -29,7 +29,7 @@ version = "2017.2"
 
 project {
 
-    vcsRoot(GitHub)
+//    vcsRoot(GitHub)
     buildType(Build)
 }
 
@@ -38,10 +38,9 @@ object Build : BuildType({
 
     artifactRules = "build/libs/*.jar"
 
-
-    vcs {
-        root(GitHub)
-    }
+//    vcs {
+//        root(GitHub)
+//    }
 
     steps {
         gradle {
@@ -63,12 +62,12 @@ object Build : BuildType({
     }
 })
 
-object GitHub : GitVcsRoot({
-    name = "AppGitHub"
-    url = "https://github.com/antonarhipov/app"
-    authMethod = password {
-        userName = "antonarhipov"
-        password = "zxxa13ec3d722b5aef74a02c867ad682a07b568905dceb0ee997cd4664dd8ea5fe0179060b66debea84775d03cbe80d301b"
-    }
-    param("teamcity:vcsResourceDiscovery:versionedSettingsRoot", "true")
-})
+//object GitHub : GitVcsRoot({
+//    name = "AppGitHub"
+//    url = "https://github.com/antonarhipov/app"
+//    authMethod = password {
+//        userName = "antonarhipov"
+//        password = "zxxa13ec3d722b5aef74a02c867ad682a07b568905dceb0ee997cd4664dd8ea5fe0179060b66debea84775d03cbe80d301b"
+//    }
+//    param("teamcity:vcsResourceDiscovery:versionedSettingsRoot", "true")
+//})
