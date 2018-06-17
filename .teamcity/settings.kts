@@ -23,6 +23,8 @@ object Build : BuildType({
             tasks = "clean build"
             buildFile = ""
             jdkHome = "%env.JDK_18%"
+            useGradleWrapper = true
+            gradleWrapperPath = "./gradlew"
         }
     }
 
