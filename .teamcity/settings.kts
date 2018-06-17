@@ -38,9 +38,9 @@ object Build : BuildType({
 
     artifactRules = "build/libs/*.jar"
 
-//    vcs {
-//        root(GitHub)
-//    }
+    vcs {
+        root(DslContext.settingsRoot)
+    }
 
     steps {
         gradle {
