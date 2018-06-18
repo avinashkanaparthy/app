@@ -40,7 +40,7 @@ object Upload : BuildType({
     steps {
         script {
             scriptContent = """
-                //some logic here
+                #some logic here
             """.trimIndent()
         }
     }
