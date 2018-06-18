@@ -18,6 +18,8 @@ project {
 object Build : BuildType({
     name = "Build"
 
+    artifactRules = "build/libs/app*.jar"
+
     vcs {
         root(DslContext.settingsRoot)
     }
@@ -25,8 +27,6 @@ object Build : BuildType({
     steps {
         gradle { tasks = "clean build" }
     }
-
-    artifactRules = "build/libs/app*.jar"
 
     cleanup {
         artifacts(days = 2)
@@ -59,5 +59,5 @@ object Upload : BuildType({
 
     triggers { vcs {
         watchChangesInDependencies = true
-    } }
+    }}
 })
