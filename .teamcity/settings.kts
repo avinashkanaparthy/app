@@ -8,50 +8,6 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.version
 version = "2018.1"
 
 project {
-    buildType(Build)
-    buildType(Upload)
+
 }
 
-object Build : BuildType({
-    name = "Build"
-
-    artifactRules = "build/libs/app*.jar"
-
-    vcs {
-        root(DslContext.settingsRoot)
-    }
-
-    steps {
-        gradle {
-            tasks = "clean build"
-        }
-    }
-
-    cleanup {
-        history(days = 2)
-        artifacts(days = 2)
-    }
-})
-
-object Upload : BuildType({
-    name = "Upload"
-
-    dependencies {
-        dependency(Build) {
-            snapshot {  }
-        }
-
-        dependency(Build) {
-            artifacts {
-                artifactRules = "*.jar"
-                sameChainOrLastFinished()
-            }
-        }
-    }
-
-    triggers {
-        vcs {
-            watchChangesInDependencies = true
-        }
-    }
-})
