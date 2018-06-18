@@ -6,14 +6,15 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.project
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_1.version
 
-version = "2017.2"
+version = "2018.1"
 
 project {
     buildType(Build)
     buildType(Upload)
 }
 
-object Build : BuildType ({
+
+object Build : BuildType({
     id("Build")
     name = "Build"
 
@@ -25,7 +26,7 @@ object Build : BuildType ({
 
     steps {
         gradle {
-            tasks="clean build"
+            tasks = "clean build"
         }
     }
 
@@ -50,11 +51,13 @@ object Upload : BuildType({
         }
     }
     dependencies {
-        dependency(Build) { snapshot {  }}
-        dependency(Build) { artifacts {
-            artifactRules = "app*.jar"
-            sameChainOrLastFinished()
-        }}
+        dependency(Build) { snapshot { } }
+        dependency(Build) {
+            artifacts {
+                artifactRules = "app*.jar"
+                sameChainOrLastFinished()
+            }
+        }
     }
 
     triggers {
@@ -64,29 +67,6 @@ object Upload : BuildType({
     }
 })
 
-//buildType {
-//    id("Build")
-//    name = "Build"
-//
-//    artifactRules = "build/libs/*.jar"
-//
-//    vcs {
-//        root(DslContext.settingsRoot)
-//    }
-//
-//    steps {
-//        gradle {
-//            tasks = "clean build"
-//        }
-//    }
-//
-//    triggers {
-//        vcs { }
-//    }
-//
-//    cleanup {
-//        artifacts(days = 2)
-//        history(days = 2)
-//    }
-//}
+
+
 
