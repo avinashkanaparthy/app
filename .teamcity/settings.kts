@@ -9,6 +9,9 @@ version = "2017.2"
 
 project {
     buildType {
+        id("Build")
+        name = "Build"
+
         artifactRules = "build/libs/*.jar"
 
         vcs {
