@@ -9,24 +9,4 @@ version = "2018.1"
 
 project {
 
-    buildType {
-        name = "Build"
-
-        artifactRules = "build/libs/app*.jar"
-
-        vcs {
-            root(DslContext.settingsRoot)
-        }
-
-        steps {
-            gradle {
-                tasks = "clean build"
-            }
-        }
-
-        cleanup {
-            history(days = 2)
-            artifacts(days = 2)
-        }
-    }
 }
