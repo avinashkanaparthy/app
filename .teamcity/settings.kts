@@ -7,7 +7,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.GitVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2018_1.version
 
-version = "2017.2"
+version = "2018.1"
 
 project {
     vcsRoot(GitHubAppVcsRoot)
