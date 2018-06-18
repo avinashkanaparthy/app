@@ -12,6 +12,7 @@ project {
 
     buildType(Build)
     buildType(Upload)
+
 }
 
 object Build : BuildType({
@@ -22,9 +23,7 @@ object Build : BuildType({
     }
 
     steps {
-        gradle {
-            tasks = "clean build"
-        }
+        gradle { tasks = "clean build" }
     }
 
     artifactRules = "build/libs/app*.jar"
@@ -41,22 +40,24 @@ object Upload : BuildType({
     steps {
         script {
             scriptContent = """
-                #some logic here
+                echo 'hello'
             """.trimIndent()
         }
     }
 
     dependencies {
-        dependency(Build) { snapshot {  }}
-        dependency(Build) { artifacts {
-            artifactRules = "*.jar"
-            sameChainOrLastFinished()
-        }}
-    }
-
-    triggers {
-        vcs {
-            watchChangesInDependencies = true
+        dependency(Build) {
+            snapshot {  }
+        }
+        dependency(Build) {
+            artifacts {
+                artifactRules = "*.jar"
+                sameChainOrLastFinished()
+            }
         }
     }
+
+    triggers { vcs {
+        watchChangesInDependencies = true
+    } }
 })
