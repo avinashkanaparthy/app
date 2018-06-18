@@ -4,11 +4,13 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_1.project
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.GitVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2018_1.version
 
-version = "2018.1"
+version = "2017.2"
 
 project {
+    vcsRoot(GitHubAppVcsRoot)
     buildType(Build)
     buildType(Upload)
 }
@@ -21,7 +23,8 @@ object Build : BuildType({
     artifactRules = "build/libs/app*.jar"
 
     vcs {
-        root(DslContext.settingsRoot)
+//        root(DslContext.settingsRoot)
+        root(GitHubAppVcsRoot)
     }
 
     steps {
@@ -67,6 +70,16 @@ object Upload : BuildType({
     }
 })
 
+
+object GitHubAppVcsRoot : GitVcsRoot({
+    name = "GitHubAppVcsRoot"
+    url = "https://github.com/antonarhipov/app"
+    branchSpec = """
+        +:refs/heads/*
+        +:refs/pull/*/merge
+    """.trimIndent()
+    useTagsAsBranches = true
+})
 
 
 
