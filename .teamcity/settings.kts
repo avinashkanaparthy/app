@@ -13,6 +13,8 @@ project {
 }
 
 object Build : BuildType ({
+    id("Build")
+    name = "Build"
 
     artifactRules = "build/libs/app*.jar"
 
@@ -35,6 +37,9 @@ object Build : BuildType ({
 })
 
 object Upload : BuildType({
+
+    id("Upload")
+    name = "Upload"
 
     steps {
         script {
