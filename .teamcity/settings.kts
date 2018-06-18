@@ -1,6 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.BuildType
 import jetbrains.buildServer.configs.kotlin.v2018_1.DslContext
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_1.project
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_1.version
@@ -8,34 +9,50 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.version
 version = "2017.2"
 
 project {
-    buildType {
-        id("Build")
-        name = "Build"
+    buildType(Build)
+}
 
-        artifactRules = "build/libs/*.jar"
+object Build : BuildType ({
 
-        vcs {
-            root(DslContext.settingsRoot)
-        }
+    artifactRules = "build/libs/app*.jar"
 
-        steps {
-            gradle {
-                tasks = "clean build"
-            }
-        }
+    vcs {
+        root(DslContext.settingsRoot)
+    }
 
-        triggers {
-            vcs {  }
-        }
-
-        cleanup {
-            artifacts(days = 2)
-            history(days = 2)
+    steps {
+        gradle {
+            tasks="clean build"
         }
     }
-}
-//
-//object Build : BuildType({
+
+    triggers { vcs {  } }
+
+    cleanup {
+        artifacts(days = 2)
+        history(days = 2)
+    }
+})
+
+object Upload : BuildType({
+
+    steps {
+        script {
+            scriptContent = """
+                echo 'hello!'
+            """.trimIndent()
+        }
+    }
+    dependencies {
+        dependency(Build) { snapshot {  }}
+        dependency(Build) { artifacts {
+            sameChainOrLastFinished()
+        }}
+    }
+})
+
+//buildType {
+//    id("Build")
 //    name = "Build"
 //
 //    artifactRules = "build/libs/*.jar"
@@ -51,13 +68,12 @@ project {
 //    }
 //
 //    triggers {
-//        vcs {
-//        }
+//        vcs { }
 //    }
 //
 //    cleanup {
-//        all(days = 2)
-//        history(days = 2)
 //        artifacts(days = 2)
+//        history(days = 2)
 //    }
-//})
+//}
+
