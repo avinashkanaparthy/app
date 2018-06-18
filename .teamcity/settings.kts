@@ -10,6 +10,7 @@ version = "2017.2"
 
 project {
     buildType(Build)
+    buildType(Upload)
 }
 
 object Build : BuildType ({
