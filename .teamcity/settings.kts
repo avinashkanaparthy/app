@@ -11,7 +11,7 @@ version = "2018.1"
 project {
 
     buildType(Build)
-    buildType(Upload)
+    buildType(Upload2)
 
 }
 
@@ -34,8 +34,8 @@ object Build : BuildType({
     }
 })
 
-object Upload : BuildType({
-    name = "Upload"
+object Upload2 : BuildType({
+    name = "Upload2"
 
     steps {
         script {
