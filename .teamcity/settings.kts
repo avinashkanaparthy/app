@@ -29,7 +29,7 @@ object Build : BuildType ({
         }
     }
 
-    triggers { vcs {  } }
+//    triggers { vcs {  } }
 
     cleanup {
         artifacts(days = 2)
@@ -55,6 +55,12 @@ object Upload : BuildType({
             artifactRules = "app*.jar"
             sameChainOrLastFinished()
         }}
+    }
+
+    triggers {
+        vcs {
+            watchChangesInDependencies = true
+        }
     }
 })
 
