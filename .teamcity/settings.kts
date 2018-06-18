@@ -52,6 +52,7 @@ object Upload : BuildType({
     dependencies {
         dependency(Build) { snapshot {  }}
         dependency(Build) { artifacts {
+            artifactRules = "app*.jar"
             sameChainOrLastFinished()
         }}
     }
