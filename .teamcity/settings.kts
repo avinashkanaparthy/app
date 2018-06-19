@@ -19,7 +19,9 @@ project {
             gradle { tasks = "clean build" }
         }
 
-        artifactRules = "clean build"
+        artifactRules = "build/libs/app*.jar"
+
+        triggers { vcs {  } }
 
         cleanup {
             artifacts(days = 2)
