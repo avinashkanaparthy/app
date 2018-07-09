@@ -49,4 +49,9 @@ object Deploy : BuildType({
             watchChangesInDependencies = true
         }
     }
+
+    cleanup {
+        artifacts(builds = 2)
+        history(builds = 2)
+    }
 })
