@@ -52,6 +52,7 @@ object Build : BuildType({
 })
 
 object Deploy : BuildType({
+    name = "Deploy"
     dependencies {
         snapshot(Build){}
         artifacts(Build){
