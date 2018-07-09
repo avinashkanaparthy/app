@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 
 /*
@@ -29,6 +30,7 @@ version = "2018.1"
 project {
 
     buildType(Build)
+    buildType(Deploy)
 }
 
 object Build : BuildType({
@@ -48,8 +50,28 @@ object Build : BuildType({
         }
     }
 
+
+})
+
+object Deploy : BuildType({
+    name = "Deploy"
+
+    steps {
+        script {
+            scriptContent = "echo 'deploying the artifact'"
+        }
+    }
+
+    dependencies {
+        snapshot(Build){}
+        artifacts(Build){
+            artifactRules = "*.jar"
+        }
+    }
+
     triggers {
         vcs {
+            watchChangesInDependencies = true
         }
     }
 })
