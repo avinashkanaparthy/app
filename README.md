@@ -1,4 +1,3 @@
 # app
 
-test
-test 
+A little Spring app 
