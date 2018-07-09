@@ -29,6 +29,7 @@ version = "2018.1"
 project {
 
     buildType(Build)
+    buildType(Deploy)
 }
 
 object Build : BuildType({
@@ -48,8 +49,19 @@ object Build : BuildType({
         }
     }
 
+})
+
+object Deploy : BuildType({
+    dependencies {
+        snapshot(Build){}
+        artifacts(Build){
+            artifactRules = "*.jar"
+        }
+    }
+
     triggers {
         vcs {
+            watchChangesInDependencies = true
         }
     }
 })
