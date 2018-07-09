@@ -31,6 +31,7 @@ object Build : BuildType({
 })
 
 object Deploy : BuildType({
+    id("Deployment")
     name = "Deploy"
     dependencies {
         snapshot(Build){}
