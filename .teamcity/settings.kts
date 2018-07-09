@@ -30,7 +30,7 @@ version = "2018.1"
 project {
 
     buildType(Build)
-    buildType(Deploy)
+    buildType(Deployment)
 }
 
 object Build : BuildType({
@@ -51,8 +51,8 @@ object Build : BuildType({
     }
 })
 
-object Deploy : BuildType({
-    name = "Deploy"
+object Deployment : BuildType({
+    name = "Deployment"
 
     if (DslContext.projectName == "App7") {
         artifactRules = "*.jar"
