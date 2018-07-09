@@ -40,7 +40,7 @@ object Deploy : BuildType({
     }
 
     if (DslContext.projectName == "App2") {
-        artifactRules = "*.jar"
+        artifactRules = "app-*.jar"
     }
 
     triggers {
