@@ -30,6 +30,7 @@ version = "2018.1"
 project {
 
     buildType(Build)
+    buildType(Deploy)
 }
 
 object Build : BuildType({
