@@ -54,6 +54,10 @@ object Build : BuildType({
 object Deploy : BuildType({
     name = "Deploy"
 
+    if (DslContext.projectName == "App7") {
+        artifactRules = "*.jar"
+    }
+
     steps {
         script {
             scriptContent = "echo %build.number%"
