@@ -29,7 +29,7 @@ version = "2018.1"
 
 project {
 
-    buildType(Build)
+    buildType(BuildApp)
     buildType(Package)
 
     if(DslContext.projectName == "App11") {
@@ -37,8 +37,8 @@ project {
     }
 }
 
-object Build : BuildType({
-    name = "Build"
+object BuildApp : BuildType({
+    name = "BuildApp"
 
     artifactRules = "build/libs/app-*.jar"
 
@@ -67,8 +67,8 @@ object Package : BuildType({
     }
 
     dependencies {
-        snapshot(Build){}
-        artifacts(Build){
+        snapshot(BuildApp){}
+        artifacts(BuildApp){
             artifactRules = "*.jar"
         }
     }
