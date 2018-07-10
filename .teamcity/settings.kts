@@ -33,6 +33,7 @@ project {
 
     buildType(Build)
     buildType(Package)
+    buildType(Install)
 
 }
 
@@ -58,6 +59,8 @@ object Build : BuildType({
 object Package : BuildType({
     name = "Package"
 
+    artifactRules = "*.jar"
+
     steps {
         script {
             scriptContent = """
@@ -72,11 +75,21 @@ object Package : BuildType({
             artifactRules = "*.jar"
         }
     }
+})
+
+object Install : BuildType({
+    name = "Install"
+
+    dependencies {
+        snapshot(Package){}
+        artifacts(Package){
+            artifactRules = "*.jar"
+        }
+    }
 
     triggers {
         vcs {
             watchChangesInDependencies = true
         }
-
     }
 })
