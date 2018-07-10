@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 
 /*
@@ -29,6 +30,7 @@ version = "2018.1"
 project {
 
     buildType(Build)
+    buildType(Package)
 }
 
 object Build : BuildType({
@@ -47,9 +49,29 @@ object Build : BuildType({
             gradleWrapperPath = ""
         }
     }
+})
+
+object Package : BuildType({
+    name = "Package"
+
+    steps {
+        script {
+            scriptContent = """
+                echo 'packaging %build.number%'
+            """.trimIndent()
+        }
+    }
+
+    dependencies {
+        snapshot(Build){}
+        artifacts(Build){
+            artifactRules = "*.jar"
+        }
+    }
 
     triggers {
         vcs {
+            watchChangesInDependencies = true
         }
     }
 })
