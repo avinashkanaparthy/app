@@ -53,10 +53,6 @@ object Build : BuildType({
         }
     }
 
-    triggers {
-        vcs {
-        }
-    }
 })
 
 object Package : BuildType({
@@ -81,8 +77,6 @@ object Package : BuildType({
         vcs {
             watchChangesInDependencies = true
         }
-        finishBuildTrigger {
-            this.buildTypeExtId = "Build"
-        }
+
     }
 })
