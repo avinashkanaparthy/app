@@ -79,6 +79,7 @@ object Package : BuildType({
 
 object Install : BuildType({
     name = "Install"
+    artifactRules = "*.jar"
 
     dependencies {
         snapshot(Package){}
