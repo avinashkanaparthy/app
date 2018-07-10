@@ -81,6 +81,8 @@ object Package : BuildType({
         vcs {
             watchChangesInDependencies = true
         }
-        finishBuildTrigger {  }
+        finishBuildTrigger {
+            this.buildTypeExtId = "Build"
+        }
     }
 })
