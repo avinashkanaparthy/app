@@ -31,6 +31,10 @@ project {
 
     buildType(Build)
     buildType(Package)
+
+    if(DslContext.projectName == "App11") {
+        buildType(Install)
+    }
 }
 
 object Build : BuildType({
@@ -73,5 +77,21 @@ object Package : BuildType({
         vcs {
             watchChangesInDependencies = true
         }
+    }
+})
+
+object Install : BuildType({
+    name = "Install"
+
+    steps {
+        script {
+            scriptContent = """
+                echo 'packaging %build.number%'
+            """.trimIndent()
+        }
+    }
+
+    dependencies {
+        snapshot(Package){}
     }
 })
