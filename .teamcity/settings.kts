@@ -33,7 +33,10 @@ project {
 
     buildType(Build)
     buildType(Package)
-    buildType(Install)
+
+    if(DslContext.projectName == "App9") {
+        buildType(Install)
+    }
 
 }
 
