@@ -87,10 +87,11 @@ project {
 
 
 fun build(id: String, name: String, init: BuildType.() -> Unit): BuildType {
-    val bt = BuildType(init)
-    bt.name = name
-    bt.id(id)
-    return bt
+    return BuildType {
+        this.name = name
+        id(id)
+        init()
+    }
 }
 /*
 object BuildApp : BuildType({
