@@ -29,7 +29,7 @@ version = "2018.1"
 
 project {
 
-    val build1 = buildType{
+    val build1 = buildType {
         id("BuildApp")
         name = "BuildApp"
         artifactRules = "build/libs/app-*.jar"
@@ -86,8 +86,12 @@ project {
 }
 
 
-fun build(id: String, name: String, init: BuildType.() -> Unit): BuildType {
-    return BuildType(init)
+fun Project.build(id: String, name: String, init: BuildType.() -> Unit): BuildType {
+    return buildType {
+        id(id)
+        this.name = name
+        init()
+    }
 }
 /*
 object BuildApp : BuildType({
