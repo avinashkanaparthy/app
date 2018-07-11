@@ -63,8 +63,8 @@ project {
         }
     }
     build("Install", "Install") {
-//        id("Install")
-//        name = " Install"
+        id("Install")
+        name = " Install"
         steps {
             script {
                 scriptContent = """
@@ -87,11 +87,7 @@ project {
 
 
 fun build(id: String, name: String, init: BuildType.() -> Unit): BuildType {
-    return BuildType {
-        this.name = name
-        id(id)
-        init()
-    }
+    return BuildType(init)
 }
 /*
 object BuildApp : BuildType({
