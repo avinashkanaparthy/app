@@ -65,12 +65,6 @@ project {
                 artifactRules = "*.jar"
             }
         }
-
-        triggers {
-            vcs {
-                watchChangesInDependencies = true
-            }
-        }
     }
     buildType {
         id("Install")
@@ -86,6 +80,12 @@ project {
 
         dependencies {
             snapshot(build2) {}
+        }
+
+        triggers {
+            vcs {
+                watchChangesInDependencies = true
+            }
         }
     }
 
