@@ -30,6 +30,7 @@ version = "2018.1"
 project {
 
     val build1 = buildType {
+        id("BuildApp")
         name = "BuildApp"
 
         artifactRules = "build/libs/app-*.jar"
@@ -47,6 +48,7 @@ project {
         }
     }
     val build2 = buildType {
+        id("Package")
         name = "Package"
 
         steps {
@@ -71,6 +73,7 @@ project {
         }
     }
     buildType {
+        id("Install")
         name = "Install"
 
         steps {
