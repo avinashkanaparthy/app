@@ -62,9 +62,9 @@ project {
             }
         }
     }
-    buildType {
-        id("Install")
-        name = " Install"
+    build("Install", "Install") {
+//        id("Install")
+//        name = " Install"
         steps {
             script {
                 scriptContent = """
