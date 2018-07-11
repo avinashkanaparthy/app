@@ -63,8 +63,6 @@ project {
         }
     }
     build("Install", "Install") {
-        id("Install")
-        name = " Install"
         steps {
             script {
                 scriptContent = """
