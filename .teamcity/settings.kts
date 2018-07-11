@@ -86,7 +86,6 @@ fun buildType(id: String, name: String, init: BuildType.() -> Unit): BuildType {
     bt.name = name
     return bt
 }
-
 /*
 object BuildApp : BuildType({
     name = "BuildApp"
