@@ -29,9 +29,7 @@ version = "2018.1"
 
 project {
 
-    val build1 = buildType {
-        id("BuildApp")
-        name = "BuildApp"
+    val build1 = build("BuildApp", "BuildApp") {
         artifactRules = "build/libs/app-*.jar"
 
         vcs {
@@ -44,9 +42,7 @@ project {
             }
         }
     }
-    val build2 = buildType {
-        id("Package")
-        name = "Package"
+    val build2 = build("Package", "Package") {
         steps {
             script {
                 scriptContent = """
