@@ -29,14 +29,66 @@ version = "2018.1"
 
 project {
 
-    buildType(BuildApp)
-    buildType(Package)
+    val build1 = buildType {
+        name = "BuildApp"
 
-    if(DslContext.projectName == "App11") {
-        buildType(Install)
+        artifactRules = "build/libs/app-*.jar"
+
+        vcs {
+            root(DslContext.settingsRoot)
+        }
+
+        steps {
+            gradle {
+                tasks = "clean build"
+                buildFile = ""
+                gradleWrapperPath = ""
+            }
+        }
     }
-}
+    val build2 = buildType {
+        name = "Package"
 
+        steps {
+            script {
+                scriptContent = """
+                echo 'packaging %build.number%'
+            """.trimIndent()
+            }
+        }
+
+        dependencies {
+            val build1Id = build1.id!!
+            snapshot(build1Id) {}
+            artifacts(build1Id) {
+                artifactRules = "*.jar"
+            }
+        }
+
+        triggers {
+            vcs {
+                watchChangesInDependencies = true
+            }
+        }
+    }
+    buildType {
+        name = "Install"
+
+        steps {
+            script {
+                scriptContent = """
+                echo 'packaging %build.number%'
+            """.trimIndent()
+            }
+        }
+
+        dependencies {
+            snapshot(build2.id!!) {}
+        }
+    }
+
+}
+/*
 object BuildApp : BuildType({
     name = "BuildApp"
 
@@ -67,8 +119,8 @@ object Package : BuildType({
     }
 
     dependencies {
-        snapshot(BuildApp){}
-        artifacts(BuildApp){
+        snapshot(BuildApp) {}
+        artifacts(BuildApp) {
             artifactRules = "*.jar"
         }
     }
@@ -92,6 +144,7 @@ object Install : BuildType({
     }
 
     dependencies {
-        snapshot(Package){}
+        snapshot(Package) {}
     }
 })
+ */
