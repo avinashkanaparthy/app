@@ -58,9 +58,8 @@ project {
         }
 
         dependencies {
-            val build1Id = build1.id!!
-            snapshot(build1Id) {}
-            artifacts(build1Id) {
+            snapshot(build1) {}
+            artifacts(build1) {
                 artifactRules = "*.jar"
             }
         }
@@ -83,7 +82,7 @@ project {
         }
 
         dependencies {
-            snapshot(build2.id!!) {}
+            snapshot(build2) {}
         }
     }
 
