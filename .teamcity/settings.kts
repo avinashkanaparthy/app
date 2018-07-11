@@ -29,10 +29,7 @@ version = "2018.1"
 
 project {
 
-    val build1 = buildType {
-        id("BuildApp")
-        name = "BuildApp"
-
+    val build1 = buildType("BuildApp","BuildApp") {
         artifactRules = "build/libs/app-*.jar"
 
         vcs {
@@ -42,15 +39,10 @@ project {
         steps {
             gradle {
                 tasks = "clean build"
-                buildFile = ""
-                gradleWrapperPath = ""
             }
         }
     }
-    val build2 = buildType {
-        id("Package")
-        name = "Package"
-
+    val build2 = buildType("Package", "Package") {
         steps {
             script {
                 scriptContent = """
@@ -66,10 +58,7 @@ project {
             }
         }
     }
-    buildType {
-        id("Install")
-        name = "Install"
-
+    buildType("Install"," Install") {
         steps {
             script {
                 scriptContent = """
@@ -90,6 +79,15 @@ project {
     }
 
 }
+
+
+fun buildType(id: String, name: String, init: BuildType.() -> Unit): BuildType {
+    val bt = BuildType(init)
+    bt.id(id)
+    bt.name = name
+    return bt
+}
+
 /*
 object BuildApp : BuildType({
     name = "BuildApp"
