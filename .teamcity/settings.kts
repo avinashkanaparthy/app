@@ -29,7 +29,9 @@ version = "2018.1"
 
 project {
 
-    val build1 = build("BuildApp","BuildApp") {
+    val build1 = buildType{
+        id("BuildApp")
+        name = "BuildApp"
         artifactRules = "build/libs/app-*.jar"
 
         vcs {
@@ -42,7 +44,9 @@ project {
             }
         }
     }
-    val build2 = build("Package", "Package") {
+    val build2 = buildType {
+        id("Package")
+        name = "Package"
         steps {
             script {
                 scriptContent = """
@@ -58,7 +62,9 @@ project {
             }
         }
     }
-    build("Install"," Install") {
+    buildType {
+        id("Install")
+        name = " Install"
         steps {
             script {
                 scriptContent = """
@@ -82,8 +88,8 @@ project {
 
 fun build(id: String, name: String, init: BuildType.() -> Unit): BuildType {
     val bt = BuildType(init)
-    bt.id(id)
     bt.name = name
+    bt.id(id)
     return bt
 }
 /*
