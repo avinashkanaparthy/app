@@ -10,7 +10,7 @@ project() function with a Project instance or an init function as
 an argument.
 
 VcsRoots, BuildTypes, Templates, and subprojects can be
-registered inside the project using the vcsRoot(), buildType(),
+registered inside the project using the vcsRoot(), build(),
 template(), and subProject() methods respectively.
 
 To debug settings scripts in command-line, run the
@@ -29,7 +29,7 @@ version = "2018.1"
 
 project {
 
-    val build1 = buildType("BuildApp","BuildApp") {
+    val build1 = build("BuildApp","BuildApp") {
         artifactRules = "build/libs/app-*.jar"
 
         vcs {
@@ -42,7 +42,7 @@ project {
             }
         }
     }
-    val build2 = buildType("Package", "Package") {
+    val build2 = build("Package", "Package") {
         steps {
             script {
                 scriptContent = """
@@ -58,7 +58,7 @@ project {
             }
         }
     }
-    buildType("Install"," Install") {
+    build("Install"," Install") {
         steps {
             script {
                 scriptContent = """
@@ -80,7 +80,7 @@ project {
 }
 
 
-fun buildType(id: String, name: String, init: BuildType.() -> Unit): BuildType {
+fun build(id: String, name: String, init: BuildType.() -> Unit): BuildType {
     val bt = BuildType(init)
     bt.id(id)
     bt.name = name
