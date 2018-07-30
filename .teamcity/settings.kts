@@ -7,6 +7,8 @@ version = "2018.1"
 
 project {
 
-
+    params {
+        password("passwordPhrase", "пароль")
+    }
 }
 
