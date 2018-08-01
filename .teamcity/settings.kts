@@ -8,7 +8,9 @@ version = "2018.1"
 project {
 
     params {
+        text("text", "текст")
         password("passwordPhrase", "пароль")
+        param("env.REPOSITORY_URL", "http://some.url")
     }
 }
 
