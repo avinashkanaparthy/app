@@ -6,19 +6,5 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 version = "2018.1"
 
 project {
-   buildType {
-      id("Build")
-      name = "Build"
 
-
-      steps {
-         gradle {
-            tasks = "clean build"
-         }
-      }
-
-      triggers {
-         vcs {  }
-      }
-   }
 }
