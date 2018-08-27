@@ -12,8 +12,8 @@ project {
 
 
       steps {
-         script{
-            scriptContent = "echo 'hello'"
+         gradle {
+            tasks = "clean build"
          }
       }
 
