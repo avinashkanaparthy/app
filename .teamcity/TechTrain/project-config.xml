@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="4673b6f5-b130-433f-b163-792e2558a558" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
-  <name>TechTrain</name>
-  <parameters />
-  <cleanup />
-  <subprojectsOrder order="TechTrain_Development,TechTrain_Staging,TechTrain_Live" />
-</project>
-

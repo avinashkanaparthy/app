@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="fb0812ea-c004-4c4f-a2cf-4f536074681a" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
-  <name>TeamCity Kotlin DSL</name>
-  <parameters />
-  <cleanup />
-</project>
-

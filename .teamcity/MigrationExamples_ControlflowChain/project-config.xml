@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="MigrationExamples" uuid="60c52c3e-49e5-4c6c-987b-17b2366a7559" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
-  <name>Controlflow Chain</name>
-  <parameters />
-  <cleanup />
-</project>
-

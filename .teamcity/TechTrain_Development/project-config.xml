@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="TechTrain" uuid="8d4caa08-da67-4ad5-94de-eefab9e62083" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
-  <name>Development</name>
-  <parameters />
-  <cleanup />
-  <buildTypesOrder order="TechTrain_Library,TechTrain_Application,TechTrain_TestUI,TechTrain_TestExt,TechTrain_TestOps,TechTrain_TestReport" />
-</project>
-

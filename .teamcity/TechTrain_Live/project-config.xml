@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="TechTrain" uuid="d610632f-cc4d-4246-9e05-5af8fd4392d1" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
-  <name>Live</name>
-  <parameters />
-  <cleanup />
-  <buildTypesOrder order="TechTrain_MakePublic" />
-</project>
-
