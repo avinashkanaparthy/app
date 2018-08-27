@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="f1f39d57-83d9-417e-a921-39fb644d35d8" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Step1</name>
+  <description />
+  <settings>
+    <disabled-settings>
+      <setting-ref ref="BUILD_EXT_14" />
+    </disabled-settings>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_6" name="" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="echo %teamcity.build.branch%" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="StrangeBranches_RepositoryWithBranches1" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers />
+    <build-extensions>
+      <extension id="BUILD_EXT_14" type="AutoMergeFeature">
+        <parameters>
+          <param name="teamcity.automerge.buildStatusCondition" value="successful" />
+          <param name="teamcity.automerge.dstBranch" value="&lt;default&gt;" />
+          <param name="teamcity.automerge.message" value="Merge branch '%teamcity.build.branch%'" />
+          <param name="teamcity.automerge.srcBranchFilter" value="+:refs/heads/hotfix" />
+          <param name="teamcity.merge.policy" value="alwaysCreateMergeCommit" />
+        </parameters>
+      </extension>
+      <extension id="jetbrains.agent.free.space" type="jetbrains.agent.free.space">
+        <parameters>
+          <param name="free-space-fail-start" value="true" />
+          <param name="free-space-work" value="100mb" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+

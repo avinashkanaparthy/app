@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c9798d82-5f1f-467d-87c1-af7ea47ce4ec" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Second</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowPersonalBuildTriggering" value="false" />
+      <option name="buildConfigurationType" value="DEPLOYMENT" />
+      <option name="maximumNumberOfBuilds" value="1" />
+    </options>
+    <parameters>
+      <param name="Confirm" value="" spec="checkbox display='prompt' checkedValue='true' label='Are you sure?'" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_5" name="" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[echo "Second"
+echo %dep.MigrationExamples_BuildChain_First.build.vcs.number%
+echo "##teamcity[buildStatus status='<status value>' text='{build.status.text} and %dep.MigrationExamples_BuildChain_First.build.vcs.number%']"]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings />
+    <requirements />
+    <build-triggers />
+    <artifact-dependencies>
+      <dependency id="ARTIFACT_DEPENDENCY_1" sourceBuildTypeId="MigrationExamples_BuildChain_First" cleanDestination="false">
+        <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" />
+        <artifact sourcePath="result.txt" />
+      </dependency>
+    </artifact-dependencies>
+    <cleanup />
+  </settings>
+</build-type>
+

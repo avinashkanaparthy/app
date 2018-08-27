@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="2c3e907e-81c4-4d34-a7ba-c39d28319c32" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>DotNet</name>
+  <parameters />
+  <project-extensions>
+    <extension id="repository-nuget-default" type="PackageRepository">
+      <parameters>
+        <param name="indexPackages" value="false" />
+        <param name="name" value="default" />
+        <param name="type" value="nuget" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+

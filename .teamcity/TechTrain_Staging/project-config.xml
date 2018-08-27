@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="TechTrain" uuid="8aaabf12-5db3-4a9d-8ddc-c8099fcda198" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Staging</name>
+  <parameters />
+  <cleanup />
+  <buildTypesOrder order="TechTrain_Docker,TechTrain_TestApplication" />
+</project>
+

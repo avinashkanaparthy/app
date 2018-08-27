@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="3faf84e4-03bf-416b-92d0-65aebd73dd08" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>StrangeBranches</name>
+  <parameters />
+  <project-extensions>
+    <extension id="PROJECT_EXT_2" type="project-graphs">
+      <parameters>
+        <param name="defaultFilters" value="" />
+        <param name="format" value="text" />
+        <param name="hideFilters" value="" />
+        <param name="series"><![CDATA[[
+  {
+    "type": "valueType",
+    "title": "Build Duration (all stages)",
+    "sourceBuildTypeId": "StrangeBranches_Step2",
+    "key": "BuildDuration"
+  },
+  {
+    "type": "valueType",
+    "title": "Build Checkout Time",
+    "sourceBuildTypeId": "StrangeBranches_Step2",
+    "key": "buildStageDuration:sourcesUpdate"
+  },
+  {
+    "type": "valueType",
+    "title": "Time Spent in Queue",
+    "sourceBuildTypeId": "StrangeBranches_Step2",
+    "key": "TimeSpentInQueue"
+  }
+]]]></param>
+        <param name="seriesTitle" value="Serie" />
+        <param name="title" value="New chart title" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+

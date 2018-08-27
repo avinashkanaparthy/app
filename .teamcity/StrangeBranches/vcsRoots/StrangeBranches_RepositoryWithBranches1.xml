@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="e9777e5c-8f72-4f3d-81ce-cba31e53aa81" type="jetbrains.git" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>repository-with-branches-1</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="PASSWORD" />
+  <param name="branch" value="refs/heads/master" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="reportTagRevisions" value="true" />
+  <param name="secure:password" value="credentialsJSON:9c527ed9-fdf3-4e93-96a8-646415563d05" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="teamcity:branchSpec" value="+:*" />
+  <param name="url" value="https://github.com/antonarhipov/repository-with-branches-1" />
+  <param name="useAlternates" value="true" />
+  <param name="username" value="antonarhipov" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+

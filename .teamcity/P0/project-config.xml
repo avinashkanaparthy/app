@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="d969f708-445d-41f2-8f83-e65ac6ecfcc6" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>P0</name>
+  <parameters />
+  <project-extensions>
+    <extension id="PROJECT_EXT_9" type="OAuthProvider">
+      <parameters>
+        <param name="displayName" value="Docker Registry" />
+        <param name="providerType" value="Docker" />
+        <param name="repositoryUrl" value="https://docker.io" />
+        <param name="secure:userPass" value="credentialsJSON:84894465-ca51-4988-ada9-b6c756550b3a" />
+        <param name="userName" value="antonarhipov" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="436bd6f0-330d-4e18-a55c-79406eb70197" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Hugo</name>
+  <description />
+  <settings>
+    <options>
+      <option name="artifactRules" value="public =&gt; content.zip" />
+    </options>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_24" name="Build Hugo Web Site" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="hugo" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="TeamCityKotlinDsl_HttpsGithubComAntonarhipovTeamcityKotlinDslRefsHeadsMaster" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter" value="+:*" />
+          <param name="enableQueueOptimization" value="true" />
+          <param name="quietPeriodMode" value="DO_NOT_USE" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <cleanup />
+  </settings>
+</build-type>
+
