@@ -30,7 +30,9 @@ project {
 
         dependencies {
             dependency(build1){
-                snapshot {  }
+                snapshot {
+
+                }
                 artifacts {
                     artifactRules = "app-*.jar"
                 }
