@@ -6,49 +6,51 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 version = "2018.1"
 
 project {
-
-    val build1 = buildType {
-        id("Build")
-        name = "Build My App"
-
-        artifactRules = "build/libs/app-*.jar"
-
-        vcs {
-            root(DslContext.settingsRoot)
-        }
+    val app = buildType {
+        id("App")
+        name = "App"
 
         steps {
-            gradle {
-                tasks = "clean build"
-            }
+            
         }
-    }
-
-    buildType {
-        id("Test")
-        name = "Test My App"
 
         dependencies {
-            dependency(build1){
-                snapshot {
-
-                }
-                artifacts {
-                    artifactRules = "app-*.jar"
-                }
-            }
-        }
-
-        steps {
-            script {
-                scriptContent = "du -k *.jar"
-            }
         }
 
         triggers {
-            vcs {
-                watchChangesInDependencies = true
-            }
+        }
+    }
+
+    val buildApplication = buildType {
+        id("BuildApplication")
+        name = "BuildApplication"
+
+        steps {
+        }
+
+        dependencies {
+        }
+
+        triggers {
+        }
+    }
+
+    val testApplication = buildType {
+        id("TestApplication")
+        name = "TestApplication"
+
+        type = BuildTypeSettings.Type.COMPOSITE
+
+        steps {
+        }
+
+
+        triggers {
         }
     }
 }
+
+object BuildMyApp : BuildType({
+    name = "BuildMyApp"
+
+})
