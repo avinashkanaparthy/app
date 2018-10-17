@@ -39,13 +39,13 @@ object Publish : BuildType({
 })
 
 class Pipeline {
-    val stages = arrayListOf<Stage>()
+    val phases = arrayListOf<Phase>()
 
-    fun stage(description: String, init: Stage.() -> Unit = {}) {
-        val newPhase = Stage()
+    fun stage(description: String, init: Phase.() -> Unit = {}) {
+        val newPhase = Phase()
         newPhase.init()
 
-        stages.lastOrNull()?.let { prevPhase ->
+        phases.lastOrNull()?.let { prevPhase ->
             prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
                 newPhase.buildTypes.firstOrNull()?.let {
                     it.dependencies {
@@ -54,11 +54,11 @@ class Pipeline {
                 }
             }
         }
-        stages.add(newPhase)
+        phases.add(newPhase)
     }
 }
 
-class Stage {
+class Phase {
     val buildTypes = arrayListOf<BuildType>()
 
     operator fun BuildType.unaryPlus() {
@@ -77,8 +77,8 @@ fun Project.pipeline(init: Pipeline.() -> Unit = {}) {
     pipeline.init()
 
     //register all builds in pipeline
-    pipeline.stages.forEach { stage ->
-        stage.buildTypes.forEach {
+    pipeline.phases.forEach { it ->
+        it.buildTypes.forEach {
             buildType(it)
         }
     }
