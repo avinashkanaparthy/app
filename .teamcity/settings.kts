@@ -45,21 +45,21 @@ class Pipeline {
         val newPhase = Phase()
         newPhase.init()
 
-//        phases.lastOrNull()?.let { prevPhase ->
-//            prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
-//                newPhase.buildTypes.firstOrNull()?.let {
-//                    it.dependencies {
-//                        snapshot(lastBuildType) {}
-//                    }
-//                }
-//            }
-//        }
+        phases.lastOrNull()?.let { prevPhase ->
+            prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
+                newPhase.buildTypes.firstOrNull()?.let {
+                    it.dependencies {
+                        snapshot(lastBuildType) {}
+                    }
+                }
+            }
+        }
         phases.add(newPhase)
     }
 }
 
 class Phase {
-    val buildTypes = linkedSetOf<BuildType>()
+    val buildTypes = arrayListOf<BuildType>()
 
     operator fun BuildType.unaryPlus() {
         buildTypes.lastOrNull()?.let {
