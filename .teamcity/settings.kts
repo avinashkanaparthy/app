@@ -7,12 +7,12 @@ version = "2018.1"
 
 project {
     pipeline {
-        phase("build stuff") {
+        stage("build stuff") {
             +Build
             +PrepareArtifacts
             +Test
         }
-        phase("deploy stuff") {
+        stage("deploy stuff") {
             +Publish
         }
     }
@@ -39,13 +39,13 @@ object Publish : BuildType({
 })
 
 class Pipeline {
-    val phases = arrayListOf<Phase>()
+    val stages = arrayListOf<Stage>()
 
-    fun phase(description: String = "", init: Phase.() -> Unit = {}) {
-        val newPhase = Phase()
+    fun stage(description: String, init: Stage.() -> Unit = {}) {
+        val newPhase = Stage()
         newPhase.init()
 
-        phases.lastOrNull()?.let { prevPhase ->
+        stages.lastOrNull()?.let { prevPhase ->
             prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
                 newPhase.buildTypes.firstOrNull()?.let {
                     it.dependencies {
@@ -54,11 +54,11 @@ class Pipeline {
                 }
             }
         }
-        phases.add(newPhase)
+        stages.add(newPhase)
     }
 }
 
-class Phase {
+class Stage {
     val buildTypes = arrayListOf<BuildType>()
 
     operator fun BuildType.unaryPlus() {
@@ -75,10 +75,12 @@ class Phase {
 fun Project.pipeline(init: Pipeline.() -> Unit = {}) {
     val pipeline = Pipeline()
     pipeline.init()
+
     //register all builds in pipeline
-    pipeline.phases.forEach { phase ->
-        phase.buildTypes.forEach { bt ->
-            this.buildType(bt)
+    pipeline.stages.forEach { stage ->
+        stage.buildTypes.forEach {
+            buildType(it)
         }
     }
+
 }

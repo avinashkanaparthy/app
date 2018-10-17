@@ -48,14 +48,14 @@
         <executions>
           <execution>
             <id>compile</id>
-            <phase>process-sources</phase>
+            <stage>process-sources</stage>
             <goals>
               <goal>compile</goal>
             </goals>
           </execution>
           <execution>
             <id>test-compile</id>
-            <phase>process-test-sources</phase>
+            <stage>process-test-sources</stage>
             <goals>
               <goal>test-compile</goal>
             </goals>
