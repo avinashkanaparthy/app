@@ -12,9 +12,9 @@ project {
             +PrepareArtifacts
             +Test
         }
-        phase("deploy stuff") {
-            +Publish
-        }
+//        phase("deploy stuff") {
+//            +Publish
+//        }
     }
 }
 
@@ -45,15 +45,15 @@ class Pipeline {
         val newPhase = Phase()
         newPhase.init()
 
-        phases.lastOrNull()?.let { prevPhase ->
-            prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
-                newPhase.buildTypes.firstOrNull()?.let {
-                    it.dependencies {
-                        snapshot(lastBuildType) {}
-                    }
-                }
-            }
-        }
+//        phases.lastOrNull()?.let { prevPhase ->
+//            prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
+//                newPhase.buildTypes.firstOrNull()?.let {
+//                    it.dependencies {
+//                        snapshot(lastBuildType) {}
+//                    }
+//                }
+//            }
+//        }
         phases.add(newPhase)
     }
 }
