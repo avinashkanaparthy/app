@@ -1,7 +1,7 @@
-import jetbrains.buildServer.configs.kotlin.v2018_1.*
-import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
-import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2018_1.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_1.Project
+import jetbrains.buildServer.configs.kotlin.v2018_1.project
+import jetbrains.buildServer.configs.kotlin.v2018_1.version
 
 version = "2018.1"
 
@@ -10,22 +10,30 @@ project {
         phase("build stuff") {
             +Build
             +PrepareArtifacts
+            +Test
+        }
+        phase("deploy stuff") {
             +Publish
         }
     }
 }
 
-object Build: BuildType({
+object Build : BuildType({
     id("Build")
     name = "Build"
 })
 
-object PrepareArtifacts: BuildType({
+object PrepareArtifacts : BuildType({
     id("PrepareArtifacts")
     name = "PrepareArtifacts"
 })
 
-object Publish: BuildType({
+object Test : BuildType({
+    id("Publish")
+    name = "Publish"
+})
+
+object Publish : BuildType({
     id("Publish")
     name = "Publish"
 })
@@ -37,15 +45,15 @@ class Pipeline {
         val newPhase = Phase()
         newPhase.init()
 
-//        phases.lastOrNull()?.let { prevPhase ->
-//            newPhase.buildTypes.forEach {
-//                it.dependencies {
-//                    for (dependency in prevPhase.buildTypes) {
-//                        snapshot(it){}
-//                    }
-//                }
-//            }
-//        }
+        phases.lastOrNull()?.let { prevPhase ->
+            prevPhase.buildTypes.lastOrNull()?.let { lastBuildType ->
+                newPhase.buildTypes.firstOrNull()?.let {
+                    it.dependencies {
+                        snapshot(lastBuildType) {}
+                    }
+                }
+            }
+        }
         phases.add(newPhase)
     }
 }
