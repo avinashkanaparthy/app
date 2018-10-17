@@ -9,7 +9,7 @@ project {
     pipeline {
         phase("build stuff") {
             +Build
- //           +PrepareArtifacts
+            +PrepareArtifacts
             +Publish
         }
     }
