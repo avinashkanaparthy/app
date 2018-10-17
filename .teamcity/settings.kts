@@ -29,8 +29,8 @@ object PrepareArtifacts : BuildType({
 })
 
 object Test : BuildType({
-    id("Publish")
-    name = "Publish"
+    id("Test")
+    name = "Test"
 })
 
 object Publish : BuildType({
