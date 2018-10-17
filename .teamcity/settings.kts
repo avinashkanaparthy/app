@@ -59,7 +59,7 @@ class Pipeline {
 }
 
 class Phase {
-    val buildTypes = hashSetOf<BuildType>()
+    val buildTypes = linkedSetOf<BuildType>()
 
     operator fun BuildType.unaryPlus() {
         buildTypes.lastOrNull()?.let {
