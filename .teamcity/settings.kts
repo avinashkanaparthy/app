@@ -12,9 +12,9 @@ project {
             +PrepareArtifacts
             +Test
         }
-//        phase("deploy stuff") {
-//            +Publish
-//        }
+        phase("deploy stuff") {
+            +Publish
+        }
     }
 }
 
