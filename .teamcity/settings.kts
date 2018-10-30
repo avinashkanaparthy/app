@@ -21,7 +21,7 @@ project {
     }
 }
 
-object Build : BuildType({
+object  Build : BuildType({
     id("Build")
     name = "Build"
 })
