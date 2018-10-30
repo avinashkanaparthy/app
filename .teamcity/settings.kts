@@ -1,20 +1,23 @@
-import jetbrains.buildServer.configs.kotlin.v2018_1.BuildType
-import jetbrains.buildServer.configs.kotlin.v2018_1.Project
-import jetbrains.buildServer.configs.kotlin.v2018_1.project
-import jetbrains.buildServer.configs.kotlin.v2018_1.version
+import jetbrains.buildServer.configs.kotlin.v2018_1.*
+import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.finishBuildTrigger
 
 version = "2018.1"
 
 project {
-    pipeline {
-        stage("build stuff") {
-            +Build
-            +PrepareArtifacts
-            +Test
-        }
-        stage("deploy stuff") {
-            +Publish
-        }
+    subProject {
+        id("BuildAndTest")
+        name = "BuildAndTest"
+
+        buildType(Build)
+        buildType(PrepareArtifacts)
+        buildType(Test)
+    }
+
+    subProject {
+        id("Delivery")
+        name = "Delivery"
+
+        buildType(Publish)
     }
 }
 
@@ -26,6 +29,10 @@ object Build : BuildType({
 object PrepareArtifacts : BuildType({
     id("PrepareArtifacts")
     name = "PrepareArtifacts"
+
+    dependencies {
+        snapshot(Build) {}
+    }
 })
 
 object Test : BuildType({
@@ -38,6 +45,21 @@ object Publish : BuildType({
     name = "Publish"
 })
 
+
+//region pipeline
+fun Project.pipeline(init: Pipeline.() -> Unit = {}) {
+    val pipeline = Pipeline()
+    pipeline.init()
+
+    //register all builds in pipeline
+    pipeline.phases.forEach { it ->
+        it.buildTypes.forEach {
+            buildType(it)
+        }
+    }
+}
+
+@TeamCityDsl
 class Pipeline {
     val phases = arrayListOf<Phase>()
 
@@ -51,13 +73,16 @@ class Pipeline {
                     it.dependencies {
                         snapshot(lastBuildType) {}
                     }
+                    it.triggers.finishBuildTrigger {  }
                 }
             }
         }
         phases.add(newPhase)
     }
 }
+//endregion
 
+//region phase
 class Phase {
     val buildTypes = arrayListOf<BuildType>()
 
@@ -71,16 +96,5 @@ class Phase {
         buildTypes.add(this)
     }
 }
+//endregion
 
-fun Project.pipeline(init: Pipeline.() -> Unit = {}) {
-    val pipeline = Pipeline()
-    pipeline.init()
-
-    //register all builds in pipeline
-    pipeline.phases.forEach { it ->
-        it.buildTypes.forEach {
-            buildType(it)
-        }
-    }
-
-}

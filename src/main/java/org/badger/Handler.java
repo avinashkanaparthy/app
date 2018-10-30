@@ -1,7 +1,6 @@
 package org.badger;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,16 +14,15 @@ public class Handler {
     return "<html><body><h1>Hello!!</h1></body></html>";
   }
 
-  public void foo1(String a){
+  public void foo1(String a) {
+  }
+
+  public void foo(Long c, String a, Integer b) {
 
   }
 
-  public void foo(Long c, String a, Integer b){
 
-  }
-
-
-  public void foo2(String a, Long c, Integer b){
+  public void foo2(String a, Long c, Integer b) {
 
 
     //language=html
@@ -43,13 +41,12 @@ public class Handler {
     String kjhasgdf = "html";
 
 
-
     if ("BLAH".equalsIgnoreCase(a)) {
     }
 
   }
 
-  public void bar(Long c, Integer b){
+  public void bar(Long c, Integer b) {
 
   }
 }
