@@ -1,14 +1,25 @@
-import com.google.common.collect.Lists
-import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.gradle
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.finishBuildTrigger
-import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
+import jetbrains.buildServer.configs.kotlin.v2018_2.project
+import jetbrains.buildServer.configs.kotlin.v2018_2.version
+import org.arhan.pipeline
 
 version = "2018.2"
 
 project {
+
+    pipeline {
+        stage("Stage 1") {
+            +Config1
+            +Config2
+        }
+        stage("Stage 2") {
+            +Config3
+        }
+    }
+
+
     buildType {
         id("Build")
         name = "Build"
@@ -20,12 +31,6 @@ project {
         artifactRules = "target/*.jar"
 
         steps {
-            val newArrayList = Lists.newArrayList("a", "b", "c")
-            script {
-                scriptContent = """
-                    echo ${newArrayList}
-                """.trimIndent()
-            }
             gradle {
                 tasks = "clean build"
             }
@@ -38,57 +43,19 @@ project {
     }
 }
 
+object Config1 : BuildType({
+    name = "Config1"
+
+})
+
+object Config2 : BuildType({
+    name = "Config2"
+
+})
+
+object Config3 : BuildType({
+    name = "Config3"
+
+})
 
 //endregion
-
-//region pipeline
-fun Project.pipeline(init: Pipeline.() -> Unit = {}) {
-    val pipeline = Pipeline()
-    pipeline.init()
-
-    //register all builds in pipeline
-    pipeline.stages.forEach { it ->
-        it.buildTypes.forEach {
-            buildType(it)
-        }
-    }
-}
-
-@TeamCityDsl
-class Pipeline {
-    val stages = arrayListOf<Stage>()
-
-    fun stage(description: String, init: Stage.() -> Unit = {}) {
-        val newStage = Stage()
-        newStage.init()
-
-        stages.lastOrNull()?.let { prevStage ->
-            prevStage.buildTypes.lastOrNull()?.let { lastBuildType ->
-                newStage.buildTypes.firstOrNull()?.let {
-                    it.dependencies {
-                        snapshot(lastBuildType) {}
-                    }
-                }
-            }
-        }
-        stages.add(newStage)
-    }
-}
-//endregion
-
-//region phase
-class Stage {
-    val buildTypes = arrayListOf<BuildType>()
-
-    operator fun BuildType.unaryPlus() {
-        buildTypes.lastOrNull()?.let {
-            this.dependencies {
-//                snapshot(it) {}
-            }
-        }
-
-        buildTypes.add(this)
-    }
-}
-//endregion
-
