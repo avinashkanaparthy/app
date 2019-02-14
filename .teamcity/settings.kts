@@ -10,9 +10,7 @@ project {
         id("Build")
         name = "Build"
 
-        vcs {
-            root(ApplicationVcs)
-        }
+
 
         artifactRules = "target/*.jar"
 
@@ -28,10 +26,6 @@ project {
         }
     }
 }
-
-object ApplicationVcs : GitVcsRoot ({
-
-})
 
 
 //endregion
