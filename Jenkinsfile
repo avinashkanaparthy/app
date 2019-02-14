@@ -10,10 +10,10 @@ pipeline {
         sh './gradlew clean build'
       }
     }
-    post {
+  }
+  post {
       always {
         archiveArtifacts(artifacts: 'build/libs/*.jar', allowEmptyArchive: true, fingerprint: true)
       }
     }
-  }
 }
