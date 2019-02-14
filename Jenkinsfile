@@ -11,7 +11,9 @@ pipeline {
       }
     }
     post {
+      always {
         archiveArtifacts(artifacts: 'build/libs/*.jar', allowEmptyArchive: true, fingerprint: true)
+      }
     }
   }
 }
