@@ -1,6 +1,8 @@
+import com.google.common.collect.Lists
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.finishBuildTrigger
 import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
 
@@ -18,6 +20,12 @@ project {
         artifactRules = "target/*.jar"
 
         steps {
+            val newArrayList = Lists.newArrayList("a", "b", "c")
+            script {
+                scriptContent = """
+                    echo ${newArrayList}
+                """.trimIndent()
+            }
             gradle {
                 tasks = "clean build"
             }
