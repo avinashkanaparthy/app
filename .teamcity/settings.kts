@@ -1,6 +1,8 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
+import org.arhan.Stage
+import org.arhan.pipeline
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -28,8 +30,34 @@ version = "2018.2"
 
 project {
 
+    pipeline {
+        stage("Test"){
+            +Config1
+            +Config2
+        }
+    }
     buildType(Build)
 }
+
+object Config1 : BuildType({
+    name = "Config1"
+
+    steps {
+        script {
+            scriptContent = "echo 'Config1'"
+        }
+    }
+})
+
+object Config2 : BuildType({
+    name = "Config2"
+
+    steps {
+        script {
+            scriptContent = "echo 'Config2'"
+        }
+    }
+})
 
 object Build : BuildType({
     name = "Build"
