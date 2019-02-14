@@ -1,83 +1,48 @@
-import jetbrains.buildServer.configs.kotlin.v2018_1.*
-import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.finishBuildTrigger
-import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.GitVcsRoot
+import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
 
-version = "2018.1"
+/*
+The settings script is an entry point for defining a TeamCity
+project hierarchy. The script should contain a single call to the
+project() function with a Project instance or an init function as
+an argument.
+
+VcsRoots, BuildTypes, Templates, and subprojects can be
+registered inside the project using the vcsRoot(), buildType(),
+template(), and subProject() methods respectively.
+
+To debug settings scripts in command-line, run the
+
+    mvnDebug org.jetbrains.teamcity:teamcity-configs-maven-plugin:generate
+
+command and attach your debugger to the port 8000.
+
+To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
+-> Tool Windows -> Maven Projects), find the generate task node
+(Plugins -> teamcity-configs -> teamcity-configs:generate), the
+'Debug' option is available in the context menu for the task.
+*/
+
+version = "2018.2"
 
 project {
-    buildType {
-        id("Build")
-        name = "Build"
 
-
-
-        artifactRules = "target/*.jar"
-
-        steps {
-            maven {
-                goals = "clean package"
-            }
-        }
-
-        cleanup {
-            artifacts(days = 3, builds = 50)
-            history(days = 5, builds = 100)
-        }
-    }
+    buildType(Build)
 }
 
+object Build : BuildType({
+    name = "Build"
 
-//endregion
+    artifactRules = "target/*.jar"
 
-//region pipeline
-fun Project.pipeline(init: Pipeline.() -> Unit = {}) {
-    val pipeline = Pipeline()
-    pipeline.init()
-
-    //register all builds in pipeline
-    pipeline.stages.forEach { it ->
-        it.buildTypes.forEach {
-            buildType(it)
+    steps {
+        maven {
+            goals = "clean package"
         }
     }
-}
 
-@TeamCityDsl
-class Pipeline {
-    val stages = arrayListOf<Stage>()
-
-    fun stage(description: String, init: Stage.() -> Unit = {}) {
-        val newStage = Stage()
-        newStage.init()
-
-        stages.lastOrNull()?.let { prevStage ->
-            prevStage.buildTypes.lastOrNull()?.let { lastBuildType ->
-                newStage.buildTypes.firstOrNull()?.let {
-                    it.dependencies {
-                        snapshot(lastBuildType) {}
-                    }
-                }
-            }
-        }
-        stages.add(newStage)
+    cleanup {
+        history(builds = 100, days = 5)
+        artifacts(builds = 50, days = 3)
     }
-}
-//endregion
-
-//region phase
-class Stage {
-    val buildTypes = arrayListOf<BuildType>()
-
-    operator fun BuildType.unaryPlus() {
-        buildTypes.lastOrNull()?.let {
-            this.dependencies {
-//                snapshot(it) {}
-            }
-        }
-
-        buildTypes.add(this)
-    }
-}
-//endregion
-
+})
