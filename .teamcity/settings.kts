@@ -44,7 +44,7 @@ object Config1 : BuildType({
 
     steps {
         script {
-            scriptContent = "echo 'Config1'"
+            scriptContent = "echo 'Config12'"
         }
     }
 })
