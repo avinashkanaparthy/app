@@ -1,7 +1,8 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
-import org.arhan.Stage
+import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
 import org.arhan.pipeline
 
 /*
@@ -30,37 +31,45 @@ version = "2018.2"
 
 project {
 
-    pipeline {
-        stage("Test"){
-            +Config1
-            +Config2
-        }
-    }
-    buildType(Build)
+    vcsRoot(ApplicationVcs)
+    buildType(BuildApplication)
+    buildType(BuildDockerImage)
 }
 
-object Config1 : BuildType({
-    name = "Config1"
+object BuildDockerImage : BuildType({
+    name = "BuildDockerImage"
+
+    vcs { root(ApplicationVcs) }
 
     steps {
-        script {
-            scriptContent = "echo 'Config1'"
+        dockerCommand {
+            commandType = build {
+                source = path {
+                    path = "Dockerfile"
+                }
+                namesAndTags = "antonarhipov/application:%build.number%"
+                commandArgs = "--pull"
+            }
+        }
+        dockerCommand {
+            commandType = push {
+                namesAndTags = "antonarhipov/application:%build.number%"
+            }
         }
     }
-})
 
-object Config2 : BuildType({
-    name = "Config2"
-
-    steps {
-        script {
-            scriptContent = "echo 'Config2'"
+    dependencies {
+        dependency(BuildApplication) {
+            snapshot { runOnSameAgent = true }
+            artifacts { artifactRules = "application.jar" }
         }
     }
+
+
 })
 
-object Build : BuildType({
-    name = "Build"
+object BuildApplication : BuildType({
+    name = "BuildApplication"
 
     artifactRules = "target/*.jar"
 
@@ -76,9 +85,7 @@ object Build : BuildType({
             tasks = "clean build"
         }
     }
-
-    cleanup {
-        history(builds = 100, days = 5)
-        artifacts(builds = 50, days = 3)
-    }
 })
+
+
+object ApplicationVcs : GitVcsRoot({})
