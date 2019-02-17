@@ -31,20 +31,20 @@ version = "2018.2"
 project {
     chain {
         build(Compile) {
-            produce("application.jar")
+            produces("application.jar")
         }
         parallel {
             build(Test1) {
-                produce("test.reports.zip")
+                produces("test.reports.zip")
                 requires(Compile, "application.jar")
             }
             build(Test2) {
-                produce("test.reports.zip")
+                produces("test.reports.zip")
                 requires(Compile, "application.jar")
             }
         }
         build(Package) {
-            produce("application.zip")
+            produces("application.zip")
             requires(Compile, "application.jar")
         }
         build(Deploy) {
