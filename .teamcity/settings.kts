@@ -51,8 +51,6 @@ project {
             requires(Package, "application.zip")
         }
     }
-
-    buildTypesOrder = arrayListOf(Compile, Test1, Test2, Package, Deploy)
 }
 
 object Compile : BuildType({
