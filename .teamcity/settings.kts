@@ -58,21 +58,43 @@ project {
 object Compile : BuildType({
     name = "Compile"
 
+    steps {
+        script {
+            scriptContent = "touch application.jar"
+        }
+    }
+
 })
 
 object Test1 : BuildType({
     name = "Test1"
 
+    steps {
+        script {
+            scriptContent = "touch test.reports.zip"
+        }
+    }
+
 })
 
 object Test2 : BuildType({
     name = "Test2"
-    
+
+    steps {
+        script {
+            scriptContent = "touch test.reports.zip"
+        }
+    }
 })
 
 object Package : BuildType({
     name = "Package"
 
+    steps {
+        script {
+            scriptContent = "touch application.zip"
+        }
+    }
 })
 
 object Deploy : BuildType({
