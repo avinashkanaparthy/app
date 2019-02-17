@@ -3,7 +3,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
-import org.arhan.pipeline
+
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -30,61 +30,52 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.2"
 
 project {
-    vcsRoot(ApplicationVcs)
-    buildType(BuildApplication)
-    buildType(BuildDockerImage)
+    val chain = chain {
+        build(Compile) {
+            produce("application.jar")
+        }
+        parallel {
+            build(Test1) {
+                produce("test.reports.zip")
+                requires(Compile, "application.jar")
+            }
+            build(Test2) {
+                produce("test.reports.zip")
+                requires(Compile, "application.jar")
+            }
+        }
+        build(Package) {
+            produce("application.zip")
+            requires(Package, "application.jar")
+        }
+        build(Deploy) {
+            requires(Package, "application.zip")
+        }
+    }
+    println(chain)
 }
 
-object BuildDockerImage : BuildType({
-    name = "BuildDockerImage"
-
-    vcs { root(ApplicationVcs) }
-
-    steps {
-        dockerCommand {
-            commandType = build {
-                source = path {
-                    path = "Dockerfile"
-                }
-                namesAndTags = "antonarhipov/application:%build.number%"
-                commandArgs = "--pull"
-            }
-        }
-        dockerCommand {
-            commandType = push {
-                namesAndTags = "antonarhipov/application:%build.number%"
-            }
-        }
-    }
-
-    dependencies {
-        dependency(BuildApplication) {
-            snapshot { runOnSameAgent = true }
-            artifacts { artifactRules = "application.jar" }
-        }
-    }
-
+object Compile : BuildType({
+    name = "Compile"
 
 })
 
-object BuildApplication : BuildType({
-    name = "BuildApplication"
+object Test1 : BuildType({
+    name = "Test1"
 
-    artifactRules = "target/*.jar"
-
-    vcs {
-        root(DslContext.settingsRoot)
-    }
-
-    steps {
-        script {
-            scriptContent = "echo [a, b, c]"
-        }
-        gradle {
-            tasks = "clean build"
-        }
-    }
 })
 
+object Test2 : BuildType({
+    name = "Test2"
+    
+})
 
-object ApplicationVcs : GitVcsRoot({})
+object Package : BuildType({
+    name = "Package"
+
+})
+
+object Deploy : BuildType({
+    name = "Deploy"
+
+})
