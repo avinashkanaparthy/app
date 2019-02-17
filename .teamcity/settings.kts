@@ -1,8 +1,7 @@
-import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
+import jetbrains.buildServer.configs.kotlin.v2018_2.project
+import jetbrains.buildServer.configs.kotlin.v2018_2.version
 
 
 /*
@@ -30,7 +29,7 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.2"
 
 project {
-    val chain = chain {
+    chain {
         build(Compile) {
             produce("application.jar")
         }
@@ -52,7 +51,6 @@ project {
             requires(Package, "application.zip")
         }
     }
-    println(chain)
 }
 
 object Compile : BuildType({
