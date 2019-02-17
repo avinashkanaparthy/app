@@ -98,4 +98,5 @@ object Package : BuildType({
 object Deploy : BuildType({
     name = "Deploy"
 
+    type = Type.DEPLOYMENT
 })
