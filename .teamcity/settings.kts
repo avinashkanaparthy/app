@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.version
@@ -58,7 +59,7 @@ object Compile : BuildType({
 
     steps {
         script {
-            scriptContent = "touch application.jar"
+            scriptContent = "./generate.sh"
         }
     }
 
