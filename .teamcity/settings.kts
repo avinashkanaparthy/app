@@ -36,7 +36,7 @@ object Compile : BuildType({
 
     steps {
         script {
-            scriptContent = "./generate.sh"
+            scriptContent = "echo 'hello'"
         }
     }
 
