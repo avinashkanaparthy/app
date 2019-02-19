@@ -122,7 +122,7 @@
 <!--    <dependency>-->
 <!--      <groupId>com.github.JetBrains</groupId>-->
 <!--      <artifactId>teamcity-pipelines-dsl</artifactId>-->
-<!--      <version>master-SNAPSHOT</version>-->
+<!--      <version>0.3</version>-->
 <!--    </dependency>-->
   </dependencies>
 </project>
