@@ -4,9 +4,9 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.version
 
 /*
-   sequence    := (stage)+
+   sequential    := (stage)+
    stage    := (serial|parallel)+
-   parallel := (serial|sequence)+
+   parallel := (serial|sequential)+
    serial   := build
  */
 
@@ -18,13 +18,13 @@ project {
 
     val os = arrayListOf("Mac", "Win", "Lin")
 
-    val sequence = sequence {
+    val sequence = sequential {
         build(Compile) {
         }
         parallel {
             build(Test1) {
             }
-            sequence {
+            sequential {
                 build(Test2) {
                 }
 //                parallel {

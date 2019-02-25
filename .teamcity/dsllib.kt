@@ -21,10 +21,10 @@
 //    return bt
 //}
 //
-//fun Parallel.sequence(block: Sequential.()->Unit): Sequential {
-//    val sequence = Sequential().apply(block)
-//    sequences.add(sequence)
-//    return sequence
+//fun Parallel.sequential(block: Sequential.()->Unit): Sequential {
+//    val sequential = Sequential().apply(block)
+//    sequences.add(sequential)
+//    return sequential
 //}
 //
 //fun Sequential.parallel(block: Parallel.() -> Unit): Stage {
@@ -70,17 +70,17 @@
 //    }
 //}
 //
-//fun Project.sequence(block: Sequential.() -> Unit): Sequential {
-//    val sequence = Sequential().apply(block)
+//fun Project.sequential(block: Sequential.() -> Unit): Sequential {
+//    val sequential = Sequential().apply(block)
 //
 //    //register all builds in pipeline
-//    registerBuilds(sequence)
+//    registerBuilds(sequential)
 //
-//    return sequence
+//    return sequential
 //}
 //
-//private fun Project.registerBuilds(sequence: Sequential) {
-//    sequence.stages.forEach {
+//private fun Project.registerBuilds(sequential: Sequential) {
+//    sequential.stages.forEach {
 //        if (it is Single) {
 //            buildType(it.buildType)
 //        }
