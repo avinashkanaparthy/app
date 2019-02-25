@@ -25,9 +25,11 @@ project {
             sequence {
                 build(Test2) {
                 }
-                build(Test3) {
-                }
-                build(Test4) {
+                parallel {
+                    build(Test3) {
+                    }
+                    build(Test4) {
+                    }
                 }
             }
         }
