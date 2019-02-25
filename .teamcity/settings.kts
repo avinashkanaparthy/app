@@ -4,29 +4,42 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.version
 
 /*
-   chain    := (stage)+
+   sequence    := (stage)+
    stage    := (serial|parallel)+
-   parallel := (serial|chain)+
+   parallel := (serial|sequence)+
    serial   := build
  */
 
 version = "2018.2"
 
+//val applicationJar = Compiler.artifact("application.jar")
+
 project {
-    val chain = chain {
-        build(Compile) {}
+
+    val os = arrayListOf("Mac", "Win", "Lin")
+
+
+    val chain = sequence {
+        build(Compile) {
+        }
         parallel {
-            build(Test1) {}
-            chain {
-                build(Test2) {}
-                parallel {
-                    build(Test3) {}
-                    build(Test4) {}
+            build(Test1) {
+            }
+            sequence {
+                build(Test2) {
                 }
+//                parallel {
+                    build(Test3) {
+                    }
+                    build(Test4) {
+                    }
+//                }
             }
         }
-        build(Package) {}
-        build(Deploy) {}
+        build(Package) {
+        }
+        build(Deploy) {
+        }
     }
     println(chain)
 }
