@@ -22,7 +22,15 @@ fun Parallel.build(bt: BuildType, block: BuildType.() -> Unit): BuildType {
 
 fun Parallel.sequence(block: Sequence.() -> Unit): Sequence {
     val sequence = Sequence().apply(block)
+    buildDependencies(sequence)
     sequences.add(sequence)
+    return sequence
+}
+
+fun Sequence.sequence(block: Sequence.() -> Unit): Stage {
+    val sequence = Sequence().apply(block)
+    buildDependencies(sequence)
+    stages.add(sequence)
     return sequence
 }
 
