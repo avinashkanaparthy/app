@@ -12,30 +12,43 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.version
 
 version = "2018.2"
 
+//Could do something like this to externalize artifacts from the pipeline
 //val applicationJar = Compiler.artifact("application.jar")
 
 project {
 
     val sequence = sequence {
         build(Compile) {
+            produces("application.jar")
         }
         parallel {
             build(Test1) {
+                requires(Compile, "application.jar")
+                produces("test.reports.zip")
             }
             sequence {
                 build(Test2) {
+                    requires(Compile, "application.jar")
+                    produces("test.reports.zip")
                 }
                 parallel {
                     build(Test3) {
+                        requires(Compile, "application.jar")
+                        produces("test.reports.zip")
                     }
                     build(Test4) {
+                        requires(Compile, "application.jar")
+                        produces("test.reports.zip")
                     }
                 }
             }
         }
         build(Package) {
+            requires(Compile, "application.jar")
+            produces("application.zip")
         }
         build(Deploy) {
+            requires(Package, "application.zip")
         }
     }
     println(sequence)
@@ -46,7 +59,7 @@ object Compile : BuildType({
 
     steps {
         script {
-            scriptContent = "echo 'hello'"
+            scriptContent = "touch application.jar"
         }
     }
 
@@ -86,6 +99,11 @@ object Test3 : BuildType({
 object Test4 : BuildType({
     name = "Test4"
 
+    steps {
+        script {
+            scriptContent = "touch test.reports.zip"
+        }
+    }
 })
 
 object Package : BuildType({
