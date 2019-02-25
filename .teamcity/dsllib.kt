@@ -2,7 +2,7 @@
 //import jetbrains.buildServer.configs.kotlin.v2018_2.Project
 //import java.lang.IllegalStateException
 //
-//class Sequence {
+//class Sequential {
 //    val stages = arrayListOf<Stage>()
 //}
 //
@@ -12,7 +12,7 @@
 //
 //class Parallel: Stage {
 //    val buildTypes = arrayListOf<BuildType>()
-//    val sequences = arrayListOf<Sequence>()
+//    val sequences = arrayListOf<Sequential>()
 //}
 //
 //fun Parallel.build(bt: BuildType, block: BuildType.() -> Unit): BuildType {
@@ -21,13 +21,13 @@
 //    return bt
 //}
 //
-//fun Parallel.sequence(block: Sequence.()->Unit): Sequence {
-//    val sequence = Sequence().apply(block)
+//fun Parallel.sequence(block: Sequential.()->Unit): Sequential {
+//    val sequence = Sequential().apply(block)
 //    sequences.add(sequence)
 //    return sequence
 //}
 //
-//fun Sequence.parallel(block: Parallel.() -> Unit): Stage {
+//fun Sequential.parallel(block: Parallel.() -> Unit): Stage {
 //    val parallel = Parallel().apply(block)
 //
 //    stages.lastOrNull()?.let { stage ->
@@ -45,7 +45,7 @@
 //    return parallel
 //}
 //
-//fun Sequence.build(bt: BuildType, block: BuildType.() -> Unit): BuildType {
+//fun Sequential.build(bt: BuildType, block: BuildType.() -> Unit): BuildType {
 //    bt.apply(block)
 //
 //    registerDependency(bt, stages)
@@ -54,7 +54,7 @@
 //    return bt
 //}
 //
-//private fun Sequence.registerDependency(bt: BuildType, stages: List<Stage>) {
+//private fun Sequential.registerDependency(bt: BuildType, stages: List<Stage>) {
 //    stages.lastOrNull()?.let { stage ->
 //        if(stage is Single) {
 //            bt.dependencies.snapshot(stage.buildType){}
@@ -70,8 +70,8 @@
 //    }
 //}
 //
-//fun Project.sequence(block: Sequence.() -> Unit): Sequence {
-//    val sequence = Sequence().apply(block)
+//fun Project.sequence(block: Sequential.() -> Unit): Sequential {
+//    val sequence = Sequential().apply(block)
 //
 //    //register all builds in pipeline
 //    registerBuilds(sequence)
@@ -79,7 +79,7 @@
 //    return sequence
 //}
 //
-//private fun Project.registerBuilds(sequence: Sequence) {
+//private fun Project.registerBuilds(sequence: Sequential) {
 //    sequence.stages.forEach {
 //        if (it is Single) {
 //            buildType(it.buildType)

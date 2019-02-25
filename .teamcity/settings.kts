@@ -18,8 +18,7 @@ project {
 
     val os = arrayListOf("Mac", "Win", "Lin")
 
-
-    val chain = sequence {
+    val sequence = sequence {
         build(Compile) {
         }
         parallel {
@@ -41,7 +40,7 @@ project {
         build(Deploy) {
         }
     }
-    println(chain)
+    println(sequence)
 }
 
 object Compile : BuildType({
