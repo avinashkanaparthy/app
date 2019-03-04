@@ -48,8 +48,7 @@ project {
             produces("application.zip")
         }
         build(Publish) {
-            requires(Package, "application.jar")
-            produces("application.zip")
+            requires(Package, "application.zip")
         }
         build(Deploy) {
             requires(Package, "application.zip")
