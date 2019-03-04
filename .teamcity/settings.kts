@@ -47,6 +47,10 @@ project {
             requires(Compile, "application.jar")
             produces("application.zip")
         }
+        build(Publish) {
+            requires(Package, "application.jar")
+            produces("application.zip")
+        }
         build(Deploy) {
             requires(Package, "application.zip")
         }
@@ -112,6 +116,16 @@ object Package : BuildType({
     steps {
         script {
             scriptContent = "touch application.zip"
+        }
+    }
+})
+
+object Publish: BuildType({
+    name="Publish"
+
+    steps {
+        script {
+            scriptContent = "echo 'Publish'"
         }
     }
 })
