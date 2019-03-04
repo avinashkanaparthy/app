@@ -20,7 +20,10 @@ project {
 
     sequence {
         build(Compile)
-        build(Test)
+        parallel {
+            build(Test1)
+            build(Test2)
+        }
         build(Package)
         build(Publish)
 
