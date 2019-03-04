@@ -18,41 +18,33 @@ version = "2018.2"
 
 project {
 
-    sequence {
-        build(Compile)
-        parallel {
-            build(Test1)
-            build(Test2)
+    val sequence = sequence {
+        build(Compile) {
+            produces("application.jar")
         }
-        build(Package)
-        build(Publish)
-
-//        build(Compile) {
-//            produces("application.jar")
-//        }
-//        parallel {
-//            build(Test1) {
-//                requires(Compile, "application.jar")
-//                produces("test.reports.zip")
-//            }
-//            build(Test2) {
-//                requires(Compile, "application.jar")
-//                produces("test.reports.zip")
-//            }
-//            build(Test3) {
-//                requires(Compile, "application.jar")
-//                produces("test.reports.zip")
-//            }
-//        }
-//        build(Package) {
-//            requires(Compile, "application.jar")
-//            produces("application.zip")
-//        }
-//        build(Publish) {
-//            requires(Package, "application.zip")
-//        }
+        parallel {
+            build(Test1) {
+                requires(Compile, "application.jar")
+                produces("test.reports.zip")
+            }
+            build(Test2) {
+                requires(Compile, "application.jar")
+                produces("test.reports.zip")
+            }
+            build(Test3) {
+                requires(Compile, "application.jar")
+                produces("test.reports.zip")
+            }
+        }
+        build(Package) {
+            requires(Compile, "application.jar")
+            produces("application.zip")
+        }
+        build(Publish) {
+            requires(Package, "application.zip")
+        }
     }
-//    println(sequence)
+    println(sequence)
 }
 
 object Compile : BuildType({
