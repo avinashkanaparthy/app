@@ -26,21 +26,13 @@ project {
                 requires(Compile, "application.jar")
                 produces("test.reports.zip")
             }
-            sequence {
-                build(Test2) {
-                    requires(Compile, "application.jar")
-                    produces("test.reports.zip")
-                }
-                parallel {
-                    build(Test3) {
-                        requires(Compile, "application.jar")
-                        produces("test.reports.zip")
-                    }
-                    build(Test4) {
-                        requires(Compile, "application.jar")
-                        produces("test.reports.zip")
-                    }
-                }
+            build(Test2) {
+                requires(Compile, "application.jar")
+                produces("test.reports.zip")
+            }
+            build(Test3) {
+                requires(Compile, "application.jar")
+                produces("test.reports.zip")
             }
         }
         build(Package) {
@@ -48,9 +40,6 @@ project {
             produces("application.zip")
         }
         build(Publish) {
-            requires(Package, "application.zip")
-        }
-        build(Deploy) {
             requires(Package, "application.zip")
         }
     }
@@ -119,8 +108,8 @@ object Package : BuildType({
     }
 })
 
-object Publish: BuildType({
-    name="Publish"
+object Publish : BuildType({
+    name = "Publish"
 
     steps {
         script {
