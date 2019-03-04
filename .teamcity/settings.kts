@@ -27,13 +27,15 @@ project {
                 requires(Compile, "application.jar")
                 produces("test.reports.zip")
             }
-            build(Test2) {
-                requires(Compile, "application.jar")
-                produces("test.reports.zip")
-            }
-            build(Test3) {
-                requires(Compile, "application.jar")
-                produces("test.reports.zip")
+            sequence {
+                build(Test2) {
+                    requires(Compile, "application.jar")
+                    produces("test.reports.zip")
+                }
+                build(Test3) {
+                    requires(Compile, "application.jar")
+                    produces("test.reports.zip")
+                }
             }
         }
         build(Package) {
