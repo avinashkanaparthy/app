@@ -1,10 +1,27 @@
-//import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
-//import jetbrains.buildServer.configs.kotlin.v2018_2.Project
-//
-//interface Stage
-//
+import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_2.Project
+
+class Sequence {
+    val buildTypes = arrayListOf<BuildType>()
+
+    fun build(block: BuildType.() -> Unit) {
+        val buildType = BuildType().apply(block)
+        buildTypes.add(buildType)
+    }
+
+    fun build(buildType: BuildType) {
+        buildTypes.add(buildType)
+    }
+
+    fun build(buildType: BuildType, block: BuildType.() -> Unit) {
+        buildType.apply(block)
+        buildTypes.add(buildType)
+    }
+}
+
+
 //class Single(val buildType: BuildType) : Stage
-//
+
 //class Parallel : Stage {
 //    val buildTypes = arrayListOf<BuildType>()
 //    val sequences = arrayListOf<Sequence>()
@@ -58,14 +75,24 @@
 //    return bt
 //}
 //
-//fun Project.sequence(block: Sequence.() -> Unit): Sequence {
-//    val sequence = Sequence().apply(block)
-//    buildDependencies(sequence)
-//    registerBuilds(sequence)
-//    return sequence
-//}
-//
-//fun buildDependencies(sequence: Sequence) {
+fun Project.sequence(block: Sequence.() -> Unit): Sequence {
+    val sequence = Sequence().apply(block)
+
+    var previous: BuildType? = null
+
+    for (current in sequence.buildTypes) {
+        if (previous != null) {
+            current.dependencies.snapshot(previous){}
+        }
+        previous = current
+    }
+
+    sequence.buildTypes.forEach(this::buildType)
+
+    return sequence
+}
+
+fun buildDependencies(sequence: Sequence) {
 //    var previous: Stage? = null
 //
 //    for (stage in sequence.stages) {
@@ -82,7 +109,7 @@
 //        }
 //        previous = stage
 //    }
-//}
+}
 //
 //fun stageDependsOnSingle(stage: Stage, dependency: Single) {
 //    if (stage is Single) {

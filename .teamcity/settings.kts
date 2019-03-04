@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_2.Project
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.version
@@ -17,33 +18,38 @@ version = "2018.2"
 
 project {
 
-    val sequence = sequence {
-        build(Compile) {
-            produces("application.jar")
-        }
-        parallel {
-            build(Test1) {
-                requires(Compile, "application.jar")
-                produces("test.reports.zip")
-            }
-            build(Test2) {
-                requires(Compile, "application.jar")
-                produces("test.reports.zip")
-            }
-            build(Test3) {
-                requires(Compile, "application.jar")
-                produces("test.reports.zip")
-            }
-        }
-        build(Package) {
-            requires(Compile, "application.jar")
-            produces("application.zip")
-        }
-        build(Publish) {
-            requires(Package, "application.zip")
-        }
+    sequence {
+        build(Compile)
+        build(Test)
+        build(Package)
+        build(Publish)
+
+//        build(Compile) {
+//            produces("application.jar")
+//        }
+//        parallel {
+//            build(Test1) {
+//                requires(Compile, "application.jar")
+//                produces("test.reports.zip")
+//            }
+//            build(Test2) {
+//                requires(Compile, "application.jar")
+//                produces("test.reports.zip")
+//            }
+//            build(Test3) {
+//                requires(Compile, "application.jar")
+//                produces("test.reports.zip")
+//            }
+//        }
+//        build(Package) {
+//            requires(Compile, "application.jar")
+//            produces("application.zip")
+//        }
+//        build(Publish) {
+//            requires(Package, "application.zip")
+//        }
     }
-    println(sequence)
+//    println(sequence)
 }
 
 object Compile : BuildType({
@@ -52,6 +58,17 @@ object Compile : BuildType({
     steps {
         script {
             scriptContent = "touch application.jar"
+        }
+    }
+
+})
+
+object Test : BuildType({
+    name = "Test"
+
+    steps {
+        script {
+            scriptContent = "touch test.reports.zip"
         }
     }
 
@@ -123,4 +140,3 @@ object Deploy : BuildType({
 
     type = Type.DEPLOYMENT
 })
-
