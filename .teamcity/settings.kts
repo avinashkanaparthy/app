@@ -1,139 +1,26 @@
-import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
-import jetbrains.buildServer.configs.kotlin.v2018_2.Project
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2018_2.project
-import jetbrains.buildServer.configs.kotlin.v2018_2.version
+package AppTest.buildTypes
 
-/*
-   sequence    := (stage)+
-   stage    := (serial|parallel)+
-   parallel := (serial|sequence)+
-   serial   := build
- */
+import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dotnetBuild
+import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 
-version = "2018.2"
+object AppTest_Build : BuildType({
+    id("Build")
+    name = "Build"
 
-//Could do something like this to externalize artifacts from the pipeline
-//val applicationJar = Compiler.artifact("application.jar")
-
-project {
-
-    val sequence = sequence {
-        build(Compile) {
-            produces("application.jar")
-        }
-        parallel {
-            build(Test1) {
-                requires(Compile, "application.jar")
-                produces("test.reports.zip")
-            }
-            sequence {
-                build(Test2) {
-                    requires(Compile, "application.jar")
-                    produces("test.reports.zip")
-                }
-                build(Test3) {
-                    requires(Compile, "application.jar")
-                    produces("test.reports.zip")
-                }
-            }
-        }
-        build(Package) {
-            requires(Compile, "application.jar")
-            produces("application.zip")
-        }
-        build(Publish) {
-            requires(Package, "application.zip")
-        }
+    vcs {
+        root(random)
     }
-    println(sequence)
-}
-
-object Compile : BuildType({
-    name = "Compile"
 
     steps {
-        script {
-            scriptContent = "touch application.jar"
+        dotnetBuild {
+            name = "Build .net step"
+            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
         }
     }
 
-})
-
-object Test : BuildType({
-    name = "Test"
-
-    steps {
-        script {
-            scriptContent = "touch test.reports.zip"
+    triggers {
+        vcs {
         }
     }
-
-})
-
-object Test1 : BuildType({
-    name = "Test1"
-
-    steps {
-        script {
-            scriptContent = "touch test.reports.zip"
-        }
-    }
-
-})
-
-object Test2 : BuildType({
-    name = "Test2"
-
-    steps {
-        script {
-            scriptContent = "touch test.reports.zip"
-        }
-    }
-})
-
-object Test3 : BuildType({
-    name = "Test3"
-
-    steps {
-        script {
-            scriptContent = "touch test.reports.zip"
-        }
-    }
-})
-
-object Test4 : BuildType({
-    name = "Test4"
-
-    steps {
-        script {
-            scriptContent = "touch test.reports.zip"
-        }
-    }
-})
-
-object Package : BuildType({
-    name = "Package"
-
-    steps {
-        script {
-            scriptContent = "touch application.zip"
-        }
-    }
-})
-
-object Publish : BuildType({
-    name = "Publish"
-
-    steps {
-        script {
-            scriptContent = "echo 'Publish'"
-        }
-    }
-})
-
-object Deploy : BuildType({
-    name = "Deploy"
-
-    type = Type.DEPLOYMENT
 })
